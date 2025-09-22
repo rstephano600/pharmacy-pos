@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; // Optional, if you plan to use soft deletes
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\User;
 
 class Pharmacy extends Model
 {
     use HasFactory;
-    // use SoftDeletes; // Uncomment if you add soft deletes to the table
+    // use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'license_number',
@@ -31,32 +28,63 @@ class Pharmacy extends Model
         'is_active',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'license_expiry' => 'date',
         'is_active' => 'boolean',
-        // 'created_at' => 'datetime', // These are automatically cast by Eloquent
-        // 'updated_at' => 'datetime',
     ];
 
-    /**
-     * The model's default values for attributes.
-     *
-     * @var array
-     */
     protected $attributes = [
         'pharmacy_logo' => 'default_pharmacy_logo.png',
         'is_active' => true,
     ];
 
-    /**
-     * Interact with the pharmacy's license number.
-     * Ensures the license number is stored in uppercase format.
-     */
+    // ✅ Relationships
+    // public function users(): HasMany
+    // {
+    //     return $this->hasMany(User::class, 'pharmacy_id');
+    // }
+
+public function users()
+{
+    return $this->belongsToMany(User::class, 'pharmacy_user', 'pharmacy_id', 'user_id');
+}
+
+
+    public function staff(): HasMany
+    {
+        return $this->users()->whereIn('role', [
+            User::ROLE_PHARMACY_OWNER,
+            User::ROLE_PHARMACIST,
+            User::ROLE_PHARMACY_TECHNICIAN
+        ]);
+    }
+
+    public function activeStaff(): HasMany
+    {
+        return $this->staff()->where('is_active', true);
+    }
+
+    // ✅ Business logic
+    public function isLicenseExpired(): bool
+    {
+        return $this->license_expiry && $this->license_expiry->isPast();
+    }
+
+    // ✅ Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeValidLicense($query)
+    {
+        return $query->where(function ($q) {
+            $q->whereNull('license_expiry')
+              ->orWhere('license_expiry', '>', now());
+        });
+    }
+
+    // ✅ Mutators
     public function setLicenseNumberAttribute($value)
     {
         $this->attributes['license_number'] = strtoupper($value);

@@ -75,7 +75,7 @@
         /* Card Styles */
         .card {
             border: none;
-            border-radius: 0.35rem;
+            /* border-radius: 0.35rem; */
             box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
             margin-bottom: 1.5rem;
         }

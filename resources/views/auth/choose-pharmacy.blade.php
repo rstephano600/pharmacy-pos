@@ -1,47 +1,39 @@
-{{-- resources/views/auth/choose-pharmacy.blade.php --}}
 @extends('layouts.app')
 
+@section('title', 'Select Pharmacy')
+@section('header', 'Choose Pharmacy')
+
 @section('content')
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-lg rounded-3">
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>Choose Your Pharmacy</h4>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted mb-4 text-center">
-                        You are associated with multiple pharmacies. Please select one to continue.
-                    </p>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Select a Pharmacy to Continue</h5>
+            </div>
+            <div class="card-body">
+                @if(session('info'))
+                    <div class="alert alert-info">{{ session('info') }}</div>
+                @endif
 
-                    @if(session('pharmacy_choices') && count(session('pharmacy_choices')) > 0)
-                        <form action="{{ route('auth.set.pharmacy') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="pharmacy_id" class="form-label">Select Pharmacy</label>
-                                <select class="form-select @error('pharmacy_id') is-invalid @enderror" id="pharmacy_id" name="pharmacy_id" required>
-                                    <option value="" selected disabled>-- Choose Pharmacy --</option>
-                                    @foreach(session('pharmacy_choices') as $pharmacy)
-                                        <option value="{{ $pharmacy->id }}">{{ $pharmacy->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('pharmacy_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                <form action="{{ route('auth.choose.pharmacy.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="pharmacy_id" class="form-label">Pharmacy</label>
+                        <select name="pharmacy_id" id="pharmacy_id" class="form-select @error('pharmacy_id') is-invalid @enderror" required>
+                            <option value="">-- Select Pharmacy --</option>
+                            @foreach($pharmacies as $pharmacy)
+                                <option value="{{ $pharmacy->id }}">{{ $pharmacy->name }} ({{ $pharmacy->district }}, {{ $pharmacy->region }})</option>
+                            @endforeach
+                        </select>
+                        @error('pharmacy_id')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">
-                                    Continue
-                                </button>
-                            </div>
-                        </form>
-                    @else
-                        <div class="alert alert-warning text-center">
-                            No pharmacies found. Please contact your administrator.
-                        </div>
-                    @endif
-                </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-check-circle me-1"></i> Continue
+                    </button>
+                </form>
             </div>
         </div>
     </div>

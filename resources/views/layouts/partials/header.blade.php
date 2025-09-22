@@ -14,9 +14,10 @@
         <!-- Notifications Dropdown -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                <i class="bi bi-bell"></i>
+                <i class="bi bi-bell text-dark"></i>
                 <!-- Counter - Notifications -->
                 <span class="badge bg-danger badge-counter">3+</span>
+                
             </a>
             <!-- Dropdown - Notifications -->
             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in">
@@ -24,22 +25,22 @@
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="me-3">
                         <div class="icon-circle bg-primary">
-                            <i class="bi bi-file-text text-white"></i>
+                            <i class="bi bi-file-text text-dark"></i>
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">December 12, 2023</div>
+                        <div class="small text-dark">December 12, 2023</div>
                         <span>New prescription received</span>
                     </div>
                 </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Notifications</a>
+                <a class="dropdown-item text-center small text-dark" href="#">Show All Notifications</a>
             </div>
         </li>
 
         <!-- User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                <span class="d-none d-lg-inline text-gray-600 small me-2">{{ Auth::user()->full_name }}</span>
+                <span class="d-none d-lg-inline text-dark small me-2">{{ Auth::user()->full_name }}</span>
                 <img class="img-profile rounded-circle" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name) }}&background=4e73df&color=fff" width="32" height="32">
             </a>
             <!-- Dropdown - User Information -->

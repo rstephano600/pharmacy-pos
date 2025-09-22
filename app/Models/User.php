@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens; // or use Passport if you prefer
 
 class User extends Authenticatable
@@ -17,13 +18,14 @@ class User extends Authenticatable
      * This allows for easy reference and avoids typos (e.g., User::ROLE_ADMIN).
      */
     public const ROLE_SUPER_ADMIN = 'super_admin';
-    public const ROLE_USER = 'user';
+    public const ROLE_ADMIN = 'admin';
     public const ROLE_PHARMACY_OWNER = 'pharmacy_owner';
     public const ROLE_PHARMACIST = 'pharmacist';
     public const ROLE_PHARMACY_TECHNICIAN = 'pharmacy_technician';
     public const ROLE_PHARMACY_DISPENSER = 'Dispenser';
     public const ROLE_PHARMACY_CASHIER = 'cashier';
-    public const ROLE_CUSTOMER = 'customer'; // If you have a patient/customer portal
+    public const ROLE_CUSTOMER = 'customer';
+    public const ROLE_USER = 'user';
 
     /**
      * Get an array of all available roles for validation or dropdowns.
@@ -32,6 +34,7 @@ class User extends Authenticatable
     {
         return [
             self::ROLE_SUPER_ADMIN,
+            self::ROLE_ADMIN,
             self::ROLE_USER,
             self::ROLE_PHARMACY_OWNER,
             self::ROLE_PHARMACIST,
@@ -94,16 +97,21 @@ class User extends Authenticatable
      * Get the pharmacy that this user belongs to.
      * A user with a role like 'super_admin' might not belong to any specific pharmacy (pharmacy_id is null).
      */
-    public function pharmacy()
+public function pharmacy()
     {
         return $this->belongsTo(Pharmacy::class);
     }
 
-    public function users()
+    public function hasPharmacy(): bool
     {
-        return $this->hasMany(User::class, 'pharmacy_id');
+        return !is_null($this->pharmacy_id);
     }
+
     
+    public function pharmacies()
+{
+    return $this->belongsToMany(Pharmacy::class, 'pharmacy_user', 'user_id', 'pharmacy_id');
+}
 
     /**
      * Scope a query to only include active users.
