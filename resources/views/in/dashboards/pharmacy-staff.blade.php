@@ -173,16 +173,16 @@
 
                     <!-- Inventory Management -->
                     <div class="col-md-3 col-6 mb-3">
-                        <a href="#" class="btn btn-outline-warning w-100 h-100 py-3">
+                        <a href="{{ route('medicine_batches.index') }}" class="btn btn-outline-warning w-100 h-100 py-3">
                             <i class="bi bi-inventory display-6 d-block mb-2"></i>
-                            <span>Inventory</span>
+                            <span>Inventory/Batches</span>
                             <small class="text-muted d-block">Management</small>
                         </a>
                     </div>
 
                     <!-- Purchases -->
                     <div class="col-md-3 col-6 mb-3">
-                        <a href="#" class="btn btn-outline-secondary w-100 h-100 py-3">
+                        <a href="{{ route(('purchase_orders.index')) }}" class="btn btn-outline-secondary w-100 h-100 py-3">
                             <i class="bi bi-cart-plus display-6 d-block mb-2"></i>
                             <span>Purchases</span>
                             <small class="text-muted d-block">Orders</small>
@@ -191,7 +191,7 @@
 
                     <!-- Suppliers -->
                     <div class="col-md-3 col-6 mb-3">
-                        <a href="#" class="btn btn-outline-dark w-100 h-100 py-3">
+                        <a href="{{ route('suppliers.index') }}" class="btn btn-outline-dark w-100 h-100 py-3">
                             <i class="bi bi-truck display-6 d-block mb-2"></i>
                             <span>Suppliers</span>
                             <small class="text-muted d-block">Vendors</small>
@@ -200,7 +200,7 @@
 
                     <!-- Customers/Patients -->
                     <div class="col-md-3 col-6 mb-3">
-                        <a href="#" class="btn btn-outline-primary w-100 h-100 py-3">
+                        <a href="{{ route('customers.index') }}" class="btn btn-outline-primary w-100 h-100 py-3">
                             <i class="bi bi-people display-6 d-block mb-2"></i>
                             <span>Patients</span>
                             <small class="text-muted d-block">Customers</small>
@@ -245,7 +245,7 @@
 
                     <!-- Additional Functions -->
                     <div class="col-md-3 col-6 mb-3">
-                        <a href="#" class="btn btn-outline-success w-100 h-100 py-3">
+                        <a href="{{ route('prescriptions.index') }}" class="btn btn-outline-success w-100 h-100 py-3">
                             <i class="bi bi-prescription display-6 d-block mb-2"></i>
                             <span>Prescriptions</span>
                             <small class="text-muted d-block">Manage Rx</small>

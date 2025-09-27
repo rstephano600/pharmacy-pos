@@ -174,3 +174,21 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
+
+
+Route::resource('suppliers', \App\Http\Controllers\Pharmacy\SupplierController::class);
+Route::patch('suppliers/{supplier}/toggle-status', [\App\Http\Controllers\Pharmacy\SupplierController::class, 'toggleStatus'])
+    ->name('suppliers.toggleStatus');
+
+use App\Http\Controllers\Pharmacy\PurchaseOrderController;
+use App\Http\Controllers\Pharmacy\MedicineBatchController;
+
+// Purchase Orders CRUD
+Route::middleware(['auth'])->group(function () {
+    Route::resource('purchase_orders', PurchaseOrderController::class);
+});
+Route::resource('medicine_batches', MedicineBatchController::class)->middleware('auth');
+Route::resource('customers', \App\Http\Controllers\Pharmacy\CustomerController::class);
+Route::resource('prescriptions', \App\Http\Controllers\Pharmacy\PrescriptionController::class);
+Route::resource('prescription-items', \App\Http\Controllers\Pharmacy\PrescriptionItemController::class);
+

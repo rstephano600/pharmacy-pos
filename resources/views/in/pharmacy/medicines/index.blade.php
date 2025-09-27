@@ -130,7 +130,9 @@
                                                 @if($medicine->brand_name)
                                                     <small class="text-muted">Brand: {{ $medicine->brand_name }}</small><br>
                                                 @endif
+                                                @if(auth()->user()->hasRole('super_admin'))
                                                 <small class="text-muted">{{ $medicine->pharmacy->name ?? 'N/A' }}</small>
+                                                @endif
                                             </div>
                                         </td>
                                         <td>
@@ -146,7 +148,7 @@
                                             <small class="text-muted">{{ $medicine->storage_type_display }}</small>
                                         </td>
                                         <td>
-                                            <strong>${{ number_format($medicine->unit_price, 2) }}</strong>
+                                            <strong>{{ number_format($medicine->unit_price, 2) }}</strong>
                                         </td>
                                         <td>
                                             <div>
