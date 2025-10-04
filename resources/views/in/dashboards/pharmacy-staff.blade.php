@@ -146,7 +146,7 @@
                 <div class="row">
                     <!-- Sales Management -->
                     <div class="col-md-3 col-6 mb-3">
-                        <a href="#" class="btn btn-outline-primary w-100 h-100 py-3">
+                        <a href="{{ route('sales.index') }}" class="btn btn-outline-primary w-100 h-100 py-3">
                             <i class="bi bi-cash-coin display-6 d-block mb-2"></i>
                             <span>Sales</span>
                             <small class="text-muted d-block">Management</small>
@@ -208,6 +208,14 @@
                     </div>
 
                     <!-- Reports -->
+                    <div class="col-md-3 col-6 mb-3">
+                        <a href="{{ route('expenses.index') }}" class="btn btn-outline-info w-100 h-100 py-3">
+                            <i class="bi bi-register display-6 d-block mb-2"></i>
+                            <span>Expenses</span>
+                            <small class="text-muted d-block">Expenses</small>
+                        </a>
+                    </div>
+
                     <div class="col-md-3 col-6 mb-3">
                         <a href="#" class="btn btn-outline-info w-100 h-100 py-3">
                             <i class="bi bi-graph-up display-6 d-block mb-2"></i>

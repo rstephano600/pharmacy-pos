@@ -11,16 +11,24 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('medicine_id')->constrained('medicines')->cascadeOnDelete();
             $table->foreignId('purchase_order_item_id')->nullable()->constrained('purchase_order_items')->nullOnDelete();
+            $table->foreignId('pharmacy_id')->constrained('pharmacies')->cascadeOnDelete();
+            
             $table->string('batch_number')->nullable();
             $table->date('manufacture_date')->nullable();
             $table->date('expiry_date')->nullable();
+            
             $table->integer('quantity_received');
             $table->integer('quantity_available');
-            $table->decimal('unit_cost', 12, 2);
-            $table->decimal('selling_price', 12, 2)->nullable();
+            
+            $table->decimal('unit_cost', 12, 4);
+            $table->decimal('selling_price', 12, 4)->nullable();
+            
             $table->foreignId('received_by')->constrained('users');
             $table->boolean('is_expired')->default(false);
             $table->timestamps();
+            
+            $table->index(['medicine_id', 'expiry_date']);
+            $table->index(['pharmacy_id', 'medicine_id']);
         });
     }
 

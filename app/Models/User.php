@@ -168,6 +168,11 @@ public function isAdmin(): bool
         ]);
     }
 
+    
+    public function sales()
+    {
+        return $this->hasMany(Sale::class, 'sold_by');
+    }
     /**
      * Interact with the user's password.
      * Using the 'hashed' cast is the modern Laravel way, but a mutator is also valid.

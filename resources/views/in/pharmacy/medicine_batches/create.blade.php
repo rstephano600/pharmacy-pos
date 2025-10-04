@@ -3,30 +3,39 @@
 @section('content')
 <div class="container">
     <h2>Add Medicine Batch</h2>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.
-                <ul>
-                    @foreach ($errors->all() as $error)
-                       <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.
+            <ul>
+                @foreach ($errors->all() as $error)
+                   <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('medicine_batches.store') }}" method="POST">
         @csrf
 
-        <div class="mb-3">
-            <label class="form-label">Medicine</label>
-            <select name="medicine_id" class="form-select" required>
-                <option value="">-- Select Medicine --</option>
-                @foreach($medicines as $medicine)
-                    <option value="{{ $medicine->id }}" {{ old('medicine_id') == $medicine->id ? 'selected' : '' }}>
-                        {{ $medicine->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        {{-- Super Admin can select pharmacy --}}
+@if(auth()->user()->hasRole('super_admin'))
+<div class="mb-3">
+    <label class="form-label">Pharmacy</label>
+    <select name="pharmacy_id" class="form-select" required>
+        @foreach($pharmacies as $pharmacy)
+            <option value="{{ $pharmacy->id }}"
+                 {{ old('pharmacy_id', $medicine->pharmacy_id ?? '') == $pharmacy->id ? 'selected' : '' }}>
+                {{ $pharmacy->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+@else
+    {{-- For normal users, store active pharmacy automatically --}}
+    <input type="hidden" name="pharmacy_id" value="{{ session('active_pharmacy_id') }}">
+@endif
+
 
         <div class="mb-3">
             <label class="form-label">Purchase Order Item (optional)</label>
@@ -34,7 +43,19 @@
                 <option value="">-- Select PO Item --</option>
                 @foreach($purchaseOrderItems as $item)
                     <option value="{{ $item->id }}" {{ old('purchase_order_item_id') == $item->id ? 'selected':'' }}>
-                        PO #{{ $item->purchaseOrder->po_number }} — {{ $item->medicine->name }}
+                        PO #{{ $item->purchaseOrder->po_number }} — {{ $item->medicine->name }} - {{ $item->quantity_ordered }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Medicine</label>
+            <select name="medicine_id" class="form-select" required>
+                <option value="">-- Select Medicine --</option>
+                @foreach($medicines as $medicine)
+                    <option value="{{ $medicine->id }}" {{ old('medicine_id') == $medicine->id ? 'selected' : '' }}>
+                        {{ $medicine->name }}
                     </option>
                 @endforeach
             </select>

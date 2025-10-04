@@ -198,6 +198,19 @@ class MedicineController extends Controller
     /**
      * Remove the specified medicine from storage.
      */
+
+    public function getBatches($medicineId)
+{
+    $pharmacyId = session('active_pharmacy_id');
+
+    $batches = \App\Models\Batch::where('medicine_id', $medicineId)
+        ->where('pharmacy_id', $pharmacyId) // only active pharmacy
+        ->whereDate('expiry_date', '>', now()) // only non-expired
+        ->get(['id', 'batch_number', 'expiry_date', 'quantity']);
+
+    return response()->json($batches);
+}
+
     public function destroy(Medicine $medicine): RedirectResponse
     {
         $user = auth()->user();

@@ -14,13 +14,9 @@
         </div>
     </div>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
     <!-- Scrollable Content -->
     <div class="sidebar-scrollable">
-        <!-- Nav Items -->
-        <ul class="sidebar-nav">
+
             <!-- Dashboard -->
             <li class="nav-item {{ str_starts_with($currentRoute, 'dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}">
@@ -28,9 +24,6 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">Main Menu</div>
@@ -46,6 +39,43 @@
                 <div id="pharmacyCollapse" class="collapse {{ str_starts_with($currentRoute, 'pharmacy.') ? 'show' : '' }}">
                     <div class="collapse-inner">
                         <div class="collapse-header">Pharmacy Management</div>
+
+                        <a class="collapse-item" href="{{ route('sales.index') }}">
+                            <i class="bi bi-cash-coin display-10 d-block me-2"></i>
+                            <span>Sales</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('prescriptions.index') }}">
+                            <i class="bi bi-prescription display-10 d-block me-2"></i>
+                            <span>Prescriptions</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('customers.index') }}">
+                            <i class="bi bi-people display-10 d-block me-2"></i>
+                            <span>Patients</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('medicine-categories.index') }}">
+                            <i class="bi bi-tags display-10 d-block me-2"></i>
+                            <span>Categories</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('medicines.index') }}">
+                            <i class="bi bi-capsule display-10 d-block me-2"></i>
+                            <span>Medicines</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('medicine_batches.index') }}">
+                            <i class="bi bi-house display-10 d-block me-2"></i>
+                            <span>Inventory/Batches</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('purchase_orders.index') }}">
+                            <i class="bi bi-cart-plus display-10 d-block me-2"></i>
+                            <span>Purchases</span>
+                        </a>
+                        <a class="collapse-item" href="{{ route('suppliers.index') }}">
+                            <i class="bi bi-truck display-10 d-block me-2"></i>
+                            <span>Suppliers</span>
+                        </a>
+                        <a class="collapse-item" href="#">
+                            <i class="bi bi-people me-2"></i>
+                            <span>Staff</span>
+                        </a>
                         <a class="collapse-item" href="#">
                             <i class="bi bi-person-circle me-2"></i>
                             <span>Profile</span>
@@ -53,10 +83,6 @@
                         <a class="collapse-item" href="#">
                             <i class="bi bi-inventory me-2"></i>
                             <span>Inventory</span>
-                        </a>
-                        <a class="collapse-item" href="#">
-                            <i class="bi bi-people me-2"></i>
-                            <span>Staff</span>
                         </a>
                         @if($user->role === \App\Models\User::ROLE_PHARMACY_OWNER)
                         <a class="collapse-item" href="#">

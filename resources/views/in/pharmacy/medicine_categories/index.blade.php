@@ -31,7 +31,7 @@
             @forelse($categories as $index => $category)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td>{{ $category->category_name }}</td>
                     <td>{{ $category->description }}</td>
                     @if(auth()->user()->hasRole('super_admin'))
                         <td>{{ $category->pharmacy->name ?? 'N/A' }}</td>

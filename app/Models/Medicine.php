@@ -211,4 +211,9 @@ class Medicine extends Model
     {
         return self::STORAGE_TYPES;
     }
+
+    public function pharmacyStocks()
+    {
+        return $this->hasMany(PharmacyStock::class, 'medicine_id');
+    }
 }

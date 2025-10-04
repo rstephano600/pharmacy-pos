@@ -15,7 +15,16 @@
                         <i class="fas fa-arrow-left"></i> Back to List
                     </a>
                 </div>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.
+                <ul>
+                    @foreach ($errors->all() as $error)
+                       <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
                 <div class="card-body">
                     <form action="{{ isset($medicine) ? route('medicines.update', $medicine) : route('medicines.store') }}" 
                           method="POST" 
